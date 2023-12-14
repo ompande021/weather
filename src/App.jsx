@@ -21,14 +21,6 @@ const WeatherApp = () => {
         box2.style.visibility='visible'
     }
 
-    function location() {
-        fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${api.key}`)
-        .then(res=>res.json())
-        .then(d=>setWeather(d)) 
-
-        box2.style.visibility='visible'
-    }  
-
     var lat;
     var lon;
     navigator.geolocation.getCurrentPosition(success, error)
@@ -38,8 +30,18 @@ const WeatherApp = () => {
 
     }
     function error() {
-      alert('Error getting your current position');
+    alert('Error getting your current position');
     }
+
+    function location() {
+        fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${api.key}`)
+        .then(res=>res.json())
+        .then(d=>setWeather(d)) 
+
+        box2.style.visibility='visible'
+       
+    }  
+
     
     
     return(
@@ -48,22 +50,22 @@ const WeatherApp = () => {
                 <div id="box1">
                     <h2>Weather Forecast</h2>
                     <div>
-                    <p>Enter your city</p>
+                    <span style={{fontSize:'18px',fontWeight:'600'}}>Enter any city name :</span>
                         <div>
                             <input type="search" onChange={(e)=>setSearch(e.target.value)} />
                             <button id="b1" onClick={handleSearch}>Search</button>
                         </div>
                     </div>
-                    <button id="b2" onClick={location}>Your Location📍</button>
+                    <button id="b2" onClick={location}>Live Location📍</button>
                 </div>
                 <hr />
                 <div id="box2">
                     { (typeof weather.main !== 'undefined')? (
                             <div>
-                                <p>City : <u>{weather.name}</u> <i class="fa-solid fa-location-dot"></i></p>
-                                <p>Temperature : <u>{weather.main.temp}℃</u></p>
-                                <p>Status : <u>{weather.weather[0].main}</u></p>
-                                <p>Description : <u>{weather.weather[0].description}</u></p>
+                                <p>City : <u style={{textDecorationColor:'black'}}>{weather.name}</u> <i class="fa-solid fa-location-dot"></i></p>
+                                <p>Temperature : <u style={{textDecorationColor:'black'}}>{weather.main.temp}℃</u></p>
+                                <p>Status : <u style={{textDecorationColor:'black'}}>{weather.weather[0].main}</u></p>
+                                <p>Description : <u style={{textDecorationColor:'black'}}>{weather.weather[0].description}</u></p>
                             </div>
                         ) : ("Not Fount❌")
                     }
